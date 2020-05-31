@@ -32,6 +32,7 @@ def read_csv(path, encoding='utf-8-sig', headers=None, sep=',', dropna=True):
             # print(headers)
             start_idx += 1
 
+
         # ID,txt,Label
         sentences = []
         labels = []
@@ -55,7 +56,9 @@ def preprocess_input(data, input_cols):
     for line in data:
         #每行是一个字典
         for key in line:
+            #如果是key是'txt'
             if key in input_cols:
+                #txt进行处理，把句子转化成单词的list
                 new_line = deletebr(str(line[key]))
                 words = ''.join([c for c in new_line if c not in punctuation])
                 word_tokens = word_tokenize(words)
@@ -64,8 +67,13 @@ def preprocess_input(data, input_cols):
                 all_words.extend(filtered_words)
     return texts, all_words
 
-def preprocess_labels(data):
-    pass
+def preprocess_labels(labels):
+    if labels[0] == "positive" or labels[0] == "negtive":
+        #labels转成数字类型
+        labels = np.array([1 if label == 'positive' else 0 for label in labels])
+    elif labels[0] == "1" or labels[0] == "0":
+        labels = np.array([1 if label == '1' else 0 for label in labels])
+    return labels
 
 # 转为在embed_lookup中的idx序列
 def tokenize_all_texts(embed_lookup, texts):
@@ -88,7 +96,7 @@ def pad_features(tokenized_texts, seq_length):
     长度不足的补0，多出的截断
     '''
     features = np.zeros((len(tokenized_texts), seq_length), dtype=int)
-
+    print(features)
     for i, row in enumerate(tokenized_texts):
         features[i, -len(row):] = np.array(row)[:seq_length]
 
@@ -152,17 +160,19 @@ def testsqueeze():
 
 if __name__ == '__main__':
     ## Read csv data
-    path = "data/train.csv"
+    path = "data/train1.csv"
     sentences, labels, headers = read_csv(path)
-    labels = np.array([1 if label == '1' else 0 for label in labels])
 
+    print(sentences[80])
+    labels = preprocess_labels(labels)
+    # labels = np.array([1 if label == '1' else 0 for label in labels])
+    # exit()
     ## Preprocess input
     ingore_cols = ['ID']
     input_cols = ['txt']
 
     texts, all_words = preprocess_input(sentences, input_cols)
-    # printten(texts)
-    # printten(all_words)
+
     # print(len(labels), type(labels))
 
     ## Removing outliers
@@ -171,9 +181,10 @@ if __name__ == '__main__':
     # print("Minimum review length: {}".format(min(sentence_lens)))
     # print("Maximum review length: {}".format(max(sentence_lens)))
     # 去除空字符串
-    non_zero_idx = [ii for ii, sent in enumerate(texts) if len(sent) != 0]
-    texts = [texts[ii] for ii in non_zero_idx]
-    labels = np.array([labels[ii] for ii in non_zero_idx])
+    zero_idx = [ii for ii, sent in enumerate(texts) if len(sent) == 0]
+    for i in zero_idx:
+        texts.pop(i)
+        texts.pop(i)
 
     # print(len(texts), len(labels))
 
@@ -199,7 +210,7 @@ if __name__ == '__main__':
     ## Split Train, Test, Validation Data
     ## Get Dataloaders
     split_frac = 0.8
-    batch_size = 50
+    batch_size = 10
     train_loader, valid_loader, test_loader = \
         get_dataloader(features, labels, split_frac, batch_size)
 
@@ -216,6 +227,7 @@ if __name__ == '__main__':
     vocab_size = len(pretrained_words)
     output_size = 1  # binary class (1 or 0)
     embedding_dim = len(embed_lookup[pretrained_words[0]])  # 300-dim vectors
+    print(embedding_dim)
     num_filters = 100
     kernel_sizes = [3, 4, 5]
 

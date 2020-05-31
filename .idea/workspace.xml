@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="31526372-1dd0-4b94-af9c-6e6a8ba2d441" name="Default Changelist" comment="" />
+    <list default="true" id="31526372-1dd0-4b94-af9c-6e6a8ba2d441" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/nlp_pro1.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/nlp_pro1.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test1.py" beforeDir="false" afterPath="$PROJECT_DIR$/test1.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -10,11 +16,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/test1.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="722">
-              <caret line="237" column="19" lean-forward="true" selection-start-line="237" selection-start-column="19" selection-end-line="237" selection-end-column="19" />
+            <state relative-caret-position="322">
+              <caret line="214" column="22" selection-start-line="214" selection-start-column="8" selection-end-line="214" selection-end-column="22" />
               <folding>
                 <element signature="e#40#58#0" expanded="true" />
               </folding>
@@ -22,44 +28,60 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Trainer/Trainer.py">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/dataset.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="219">
-              <caret line="80" column="57" selection-start-line="80" selection-start-column="57" selection-end-line="80" selection-end-column="57" />
+            <state relative-caret-position="309">
+              <caret line="85" selection-start-line="85" selection-end-line="85" />
               <folding>
-                <element signature="e#0#12#0" expanded="true" />
+                <element signature="e#31#62#0" expanded="true" />
+                <element signature="e#507#729#0" />
+                <element signature="e#772#1159#0" />
+                <element signature="e#1225#1330#0" />
+                <element signature="e#1486#2348#0" />
+                <element signature="e#2410#2650#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Models/SentimentCNN.py">
+        <entry file="file://$PROJECT_DIR$/embeddings/embedding.py">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/embeddings/static_embedding.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="310">
-              <caret line="64" column="36" lean-forward="true" selection-start-line="64" selection-start-column="36" selection-end-line="64" selection-end-column="36" />
+            <state relative-caret-position="309">
+              <caret line="324" selection-start-line="324" selection-end-line="324" />
               <folding>
-                <element signature="e#0#6#0" expanded="true" />
+                <element signature="e#64#73#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://D:/Anaconda/envs/pytorch/Lib/site-packages/torch/nn/modules/conv.py">
+        <entry file="file://$PROJECT_DIR$/preprocess/preprocess.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-10">
-              <caret line="271" column="37" selection-start-line="271" selection-start-column="36" selection-end-line="271" selection-end-column="37" />
+            <state relative-caret-position="385">
+              <caret line="62" column="26" selection-start-line="62" selection-start-column="26" selection-end-line="62" selection-end-column="26" />
+              <folding>
+                <element signature="e#0#18#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/data/train.csv">
-          <provider selected="true" editor-type-id="LargeFileEditor">
-            <state relative-caret-position="110">
-              <caret line="5" column="17" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
+        <entry file="file://$PROJECT_DIR$/test2.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="304">
+              <caret line="130" column="61" lean-forward="true" selection-start-line="130" selection-start-column="4" selection-end-line="130" selection-end-column="61" />
+              <folding>
+                <element signature="e#40#58#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -79,23 +101,51 @@
       <find>Word2VecKeyedVectors</find>
       <find>num_filters</find>
       <find>200</find>
+      <find>input</find>
+      <find>preprocess_input</find>
+      <find>pad_features</find>
+      <find>testsqueeze</find>
+      <find>_read_csv</find>
+      <find>Const</find>
+      <find>preprocess_la</find>
+      <find>stopwords</find>
+      <find>all_words</find>
+      <find>tokenize_all_texts</find>
+      <find>Instance</find>
+      <find>KeyedVectors</find>
     </findStrings>
+    <replaceStrings>
+      <replace>read_csv</replace>
+    </replaceStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/data/Models/SentimentCNN.py" />
         <option value="$PROJECT_DIR$/Models/SentimentCNN.py" />
-        <option value="$PROJECT_DIR$/test1.py" />
         <option value="$PROJECT_DIR$/Trainer/Trainer.py" />
+        <option value="$PROJECT_DIR$/io/loader/loader.py" />
+        <option value="$PROJECT_DIR$/io/file_reader.py" />
+        <option value="$PROJECT_DIR$/io/loader/csvloader.py" />
+        <option value="$PROJECT_DIR$/preprocess/labels.py" />
+        <option value="$PROJECT_DIR$/preprocess/txt.py" />
+        <option value="$PROJECT_DIR$/test2.py" />
+        <option value="$PROJECT_DIR$/preprocess/preprocess.py" />
+        <option value="$PROJECT_DIR$/test1.py" />
+        <option value="$PROJECT_DIR$/embeddings/embedding.py" />
+        <option value="$PROJECT_DIR$/embeddings/static_embedding.py" />
+        <option value="$PROJECT_DIR$/core/dataset.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
-    <option name="x" value="177" />
-    <option name="y" value="52" />
-    <option name="width" value="1707" />
-    <option name="height" value="1032" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="279" />
+    <option name="y" value="30" />
+    <option name="width" value="1401" />
+    <option name="height" value="981" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -107,13 +157,13 @@
         <subPane>
           <expand>
             <path>
-              <item name="nlp_pro1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="nlp_pro1" type="462c0819:PsiDirectoryNode" />
+              <item name="nlp" type="b2602c69:ProjectViewProjectNode" />
+              <item name="nlp" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="nlp_pro1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="nlp_pro1" type="462c0819:PsiDirectoryNode" />
-              <item name="Models" type="462c0819:PsiDirectoryNode" />
+              <item name="nlp" type="b2602c69:ProjectViewProjectNode" />
+              <item name="nlp" type="462c0819:PsiDirectoryNode" />
+              <item name="embeddings" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -122,13 +172,17 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../自然语言处理/fastNLP-master" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\大学\自然语言处理\nlp" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="E:\Study\Codings\python_work\nlp_pro1" />
     </key>
@@ -209,22 +263,24 @@
       <updated>1590732241211</updated>
       <workItem from="1590732243105" duration="19271000" />
       <workItem from="1590798645582" duration="11934000" />
+      <workItem from="1590817168073" duration="826000" />
+      <workItem from="1590819181004" duration="22556000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="31205000" />
+    <option name="totallyTimeSpent" value="54587000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1295" height="695" extended-state="7" />
+    <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.12772837" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24009702" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.29432625" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.116883114" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -241,6 +297,29 @@
       <window_info anchor="right" id="SciView" order="3" />
       <window_info anchor="right" id="Database" order="4" />
     </layout>
+    <layout-to-restore>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24009702" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.055658627" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="8" />
+      <window_info anchor="bottom" id="Database Changes" order="9" />
+      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
+      <window_info anchor="bottom" id="Terminal" order="11" />
+      <window_info anchor="bottom" id="Python Console" order="12" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="SciView" order="3" />
+      <window_info anchor="right" id="Database" order="4" />
+    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -248,97 +327,172 @@
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/nlp_pro1$Trainer.coverage" NAME="Trainer Coverage Results" MODIFIED="1590805361158" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Trainer" />
     <SUITE FILE_PATH="coverage/nlp_pro1$test1.coverage" NAME="test1 Coverage Results" MODIFIED="1590811202776" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/nlp$test1.coverage" NAME="test1 Coverage Results" MODIFIED="1590847598533" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$USER_HOME$/.PyCharm2019.1/system/python_stubs/-1124566470/builtins.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="14">
-          <caret line="5021" column="8" selection-start-line="5021" selection-start-column="8" selection-end-line="5021" selection-end-column="8" />
-        </state>
-      </provider>
+    <entry file="file://$USER_HOME$/.PyCharm2019.1/system/python_stubs/-1124566470/builtins.py" />
+    <entry file="file://D:/Anaconda/envs/pytorch/Lib/site-packages/nltk/downloader.py" />
+    <entry file="file://D:/Anaconda/envs/pytorch/Lib/site-packages/nltk/corpus/__init__.py" />
+    <entry file="file://D:/Anaconda/envs/pytorch/Lib/site-packages/gensim/models/keyedvectors.py" />
+    <entry file="file://D:/Anaconda/envs/pytorch/Lib/site-packages/torch/utils/data/dataloader.py" />
+    <entry file="file://D:/Anaconda/envs/pytorch/Lib/site-packages/torch/__init__.pyi" />
+    <entry file="file://D:/Anaconda/envs/pytorch/Lib/site-packages/torch/nn/functional.py" />
+    <entry file="file://D:/Anaconda/envs/pytorch/Lib/site-packages/torch/nn/modules/conv.py" />
+    <entry file="file://$PROJECT_DIR$/data/data.csv">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://D:/Anaconda/envs/pytorch/Lib/site-packages/nltk/downloader.py">
+    <entry file="file://$USER_HOME$/.PyCharm2019.1/system/python_stubs/1655764513/builtins.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-379">
-          <caret line="779" column="34" lean-forward="true" selection-start-line="779" selection-start-column="34" selection-end-line="779" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/Anaconda/envs/pytorch/Lib/site-packages/nltk/corpus/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="288" selection-start-line="288" selection-end-line="288" />
+        <state relative-caret-position="143">
+          <caret line="334" column="4" selection-start-line="334" selection-start-column="4" selection-end-line="334" selection-end-column="4" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/data/train.csv">
-      <provider selected="true" editor-type-id="LargeFileEditor">
-        <state relative-caret-position="110">
-          <caret line="5" column="17" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
-        </state>
-      </provider>
+      <provider selected="true" editor-type-id="LargeFileEditor" />
     </entry>
-    <entry file="file://D:/Anaconda/envs/pytorch/Lib/site-packages/gensim/models/keyedvectors.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-365">
-          <caret line="1479" column="6" selection-start-line="1479" selection-start-column="6" selection-end-line="1479" selection-end-column="6" />
-        </state>
-      </provider>
+    <entry file="file://$PROJECT_DIR$/data/train1.csv">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://D:/Anaconda/envs/pytorch/Lib/site-packages/torch/utils/data/dataloader.py">
+    <entry file="file://$PROJECT_DIR$/CNN_Text_Classification.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="23" column="16" selection-start-line="23" selection-start-column="6" selection-end-line="23" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/Anaconda/envs/pytorch/Lib/site-packages/torch/__init__.pyi">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="22">
-          <caret line="621" column="8" selection-start-line="621" selection-start-column="8" selection-end-line="621" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/Anaconda/envs/pytorch/Lib/site-packages/torch/nn/functional.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="142">
-          <caret line="932" column="31" lean-forward="true" selection-start-line="932" selection-start-column="31" selection-end-line="932" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/Anaconda/envs/pytorch/Lib/site-packages/torch/nn/modules/conv.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-10">
-          <caret line="271" column="37" selection-start-line="271" selection-start-column="36" selection-end-line="271" selection-end-column="37" />
+        <state relative-caret-position="111">
+          <caret line="310" column="57" selection-start-line="310" selection-start-column="52" selection-end-line="310" selection-end-column="57" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Models/SentimentCNN.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="310">
-          <caret line="64" column="36" lean-forward="true" selection-start-line="64" selection-start-column="36" selection-end-line="64" selection-end-column="36" />
-          <folding>
-            <element signature="e#0#6#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="323">
+          <caret line="19" column="42" selection-start-line="19" selection-start-column="29" selection-end-line="19" selection-end-column="42" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test1.py">
+    <entry file="file://$PROJECT_DIR$/Models/__init__.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/io/file_reader.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="722">
-          <caret line="237" column="19" lean-forward="true" selection-start-line="237" selection-start-column="19" selection-end-line="237" selection-end-column="19" />
+        <state relative-caret-position="342">
+          <caret line="27" column="37" lean-forward="true" selection-start-line="27" selection-start-column="11" selection-end-line="27" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/preprocess/txt.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/preprocess/labels.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="8" column="17" lean-forward="true" selection-end-line="8" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://E:/python3.7/anaconda/envs/torch/Lib/site-packages/nltk/corpus/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="288" selection-start-line="288" selection-end-line="288" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/io/loader/loader.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="665">
+          <caret line="35" selection-start-line="35" selection-end-line="35" />
           <folding>
-            <element signature="e#40#58#0" expanded="true" />
+            <element signature="e#49#79#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Trainer/Trainer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="219">
-          <caret line="80" column="57" selection-start-line="80" selection-start-column="57" selection-end-line="80" selection-end-column="57" />
+        <state relative-caret-position="1569">
+          <caret line="93" selection-start-line="93" selection-end-line="93" />
           <folding>
-            <element signature="e#0#12#0" expanded="true" />
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/test_noLabel.csv">
+      <provider selected="true" editor-type-id="LargeFileEditor">
+        <state relative-caret-position="19">
+          <caret line="6" column="783" selection-start-line="6" selection-start-column="783" selection-end-line="7" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://E:/python3.7/anaconda/envs/torch/Lib/site-packages/torch/nn/modules/sparse.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="19">
+          <caret line="98" selection-start-line="98" selection-end-line="98" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/io/loader/csvloader.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-179">
+          <caret line="9" selection-start-line="9" selection-end-line="9" />
+          <folding>
+            <element signature="e#53#79#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/preprocess/preprocess.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="385">
+          <caret line="62" column="26" selection-start-line="62" selection-start-column="26" selection-end-line="62" selection-end-column="26" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/embeddings/static_embedding.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="309">
+          <caret line="324" selection-start-line="324" selection-end-line="324" />
+          <folding>
+            <element signature="e#64#73#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/embeddings/embedding.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test2.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="304">
+          <caret line="130" column="61" lean-forward="true" selection-start-line="130" selection-start-column="4" selection-end-line="130" selection-end-column="61" />
+          <folding>
+            <element signature="e#40#58#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/dataset.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="309">
+          <caret line="85" selection-start-line="85" selection-end-line="85" />
+          <folding>
+            <element signature="e#31#62#0" expanded="true" />
+            <element signature="e#507#729#0" />
+            <element signature="e#772#1159#0" />
+            <element signature="e#1225#1330#0" />
+            <element signature="e#1486#2348#0" />
+            <element signature="e#2410#2650#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test1.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="322">
+          <caret line="214" column="22" selection-start-line="214" selection-start-column="8" selection-end-line="214" selection-end-column="22" />
+          <folding>
+            <element signature="e#40#58#0" expanded="true" />
           </folding>
         </state>
       </provider>
