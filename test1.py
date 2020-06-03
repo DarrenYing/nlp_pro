@@ -19,8 +19,9 @@ import torch
 import torch.nn as nn
 from torch.utils.data import TensorDataset, DataLoader
 
-from Models.SentimentCNN import SentimentCNN
+from Models import SentimentCNN, TextRNN, AttentionTextRNN
 from Trainer.Trainer import Trainer
+from Dataset import Embedding_GoogleNews
 
 def read_csv(path, encoding='utf-8-sig', headers=None, sep=',', dropna=True):
     with open(path, 'r', encoding=encoding) as csv_file:
@@ -178,14 +179,9 @@ if __name__ == '__main__':
     # print(len(texts), len(labels))
 
     ## Use pretrained embedding layer
-    embed_lookup = KeyedVectors.load_word2vec_format(
-        'word2vec_model/GoogleNews-vectors-negative300-SLIM.bin', binary=True)
-    # store pretrained vocab
-    pretrained_words = []
-    for word in embed_lookup.vocab:
-        pretrained_words.append(word)
+    myEmbed = Embedding_GoogleNews()
 
-    tokenized_texts = tokenize_all_texts(embed_lookup, texts)
+    tokenized_texts = tokenize_all_texts(myEmbed.embed_lookup, texts)
     # print(tokenized_texts[0])
 
 
@@ -213,14 +209,13 @@ if __name__ == '__main__':
         print('No GPU available, training on CPU.')
 
     ## Models
-    vocab_size = len(pretrained_words)
     output_size = 1  # binary class (1 or 0)
-    embedding_dim = len(embed_lookup[pretrained_words[0]])  # 300-dim vectors
     num_filters = 100
     kernel_sizes = [3, 4, 5]
 
-    net = SentimentCNN(embed_lookup, vocab_size, output_size, embedding_dim,
-                       num_filters, kernel_sizes)
+    # net = SentimentCNN(myEmbed, output_size, num_filters, kernel_sizes)
+    # net = TextRNN(myEmbed, hidden_size=100, output_dim=output_size)
+    net = AttentionTextRNN(myEmbed, hidden_size=100, output_dim=output_size)
 
     print(net)
 
