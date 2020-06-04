@@ -4,16 +4,6 @@
 '''
 
 import numpy as np
-import csv
-from string import punctuation
-import re
-
-import nltk
-from nltk.corpus import stopwords
-from nltk.tokenize import word_tokenize
-from collections import Counter
-
-from gensim.models import KeyedVectors
 
 import torch
 import torch.nn as nn
@@ -21,79 +11,8 @@ from torch.utils.data import TensorDataset, DataLoader
 
 from Models import SentimentCNN, TextRNN, AttentionTextRNN
 from Trainer.Trainer import Trainer
-from Dataset import Embedding_GoogleNews
+from Dataset import Embedding_GoogleNews, PreprocessTools, CSVLoader
 
-def read_csv(path, encoding='utf-8-sig', headers=None, sep=',', dropna=True):
-    with open(path, 'r', encoding=encoding) as csv_file:
-        f = csv.reader(csv_file, delimiter=sep)
-        start_idx = 0
-
-        if headers is None:
-            headers = next(f)
-            # print(headers)
-            start_idx += 1
-
-        # ID,txt,Label
-        sentences = []
-        labels = []
-        for line_idx, line in enumerate(f, start_idx):
-            contents = line
-
-            _dict = {}
-            for header, content in zip(headers, contents):
-                if str(header).lower() == "label":
-                    labels.append(content)
-                else:
-                    _dict[header] = str(content).lower()    #小写
-            sentences.append(_dict)
-
-    return sentences, labels, headers
-
-def preprocess_input(data, input_cols):
-    texts = []
-    all_words  = []
-    stop_words = get_stopwords()
-    for line in data:
-        #每行是一个字典
-        for key in line:
-            if key in input_cols:
-                new_line = deletebr(str(line[key]))
-                words = ''.join([c for c in new_line if c not in punctuation])
-                word_tokens = word_tokenize(words)
-                filtered_words = [w for w in word_tokens if w not in stop_words]
-                texts.append(filtered_words)
-                all_words.extend(filtered_words)
-    return texts, all_words
-
-def preprocess_labels(data):
-    pass
-
-# 转为在embed_lookup中的idx序列
-def tokenize_all_texts(embed_lookup, texts):
-    tokenized_texts = []
-    for line in texts:
-        ints = []
-        for word in line:
-            try:
-                idx = embed_lookup.vocab[word].index
-            except:
-                idx = 0
-            ints.append(idx)
-        tokenized_texts.append(ints)
-
-    return tokenized_texts
-
-
-def pad_features(tokenized_texts, seq_length):
-    '''
-    长度不足的补0，多出的截断
-    '''
-    features = np.zeros((len(tokenized_texts), seq_length), dtype=int)
-
-    for i, row in enumerate(tokenized_texts):
-        features[i, -len(row):] = np.array(row)[:seq_length]
-
-    return features
 
 def split_dataset(features, labels, split_frac):
     split_idx = int(len(features) * split_frac)
@@ -130,14 +49,6 @@ def get_dataloader(features, labels, split_frac, batch_size):
 # 训练
 
 
-def get_stopwords():
-    stop_words = set(stopwords.words('english'))
-    return stop_words
-
-def deletebr(line):
-    new_line = re.sub(r'<br\s*.?>', r'', line)
-    return new_line
-
 def printten(data):
     for i in range(10):
         print(data[i])
@@ -150,47 +61,33 @@ def testsqueeze():
     print(b.shape)
 
 
-
 if __name__ == '__main__':
     ## Read csv data
     path = "data/train.csv"
-    sentences, labels, headers = read_csv(path)
-    labels = np.array([1 if label == '1' else 0 for label in labels])
+    csv_loader = CSVLoader(path)
+    sentences, labels, headers = csv_loader.sentences, csv_loader.labels, csv_loader.headers
 
     ## Preprocess input
     ingore_cols = ['ID']
     input_cols = ['txt']
 
-    texts, all_words = preprocess_input(sentences, input_cols)
-    # printten(texts)
-    # printten(all_words)
-    # print(len(labels), type(labels))
+    # PreprocessTools
+    pretool = PreprocessTools()
+
+    texts, all_words = pretool.preprocess_input(sentences, input_cols)
 
     ## Removing outliers
-    sentence_lens = Counter([len(x) for x in texts])
-    # print(sentence_lens)
-    # print("Minimum review length: {}".format(min(sentence_lens)))
-    # print("Maximum review length: {}".format(max(sentence_lens)))
-    # 去除空字符串
-    non_zero_idx = [ii for ii, sent in enumerate(texts) if len(sent) != 0]
-    texts = [texts[ii] for ii in non_zero_idx]
-    labels = np.array([labels[ii] for ii in non_zero_idx])
-
-    # print(len(texts), len(labels))
+    texts, labels = pretool.remove_outliers(texts, labels)
 
     ## Use pretrained embedding layer
     myEmbed = Embedding_GoogleNews()
 
-    tokenized_texts = tokenize_all_texts(myEmbed.embed_lookup, texts)
+    tokenized_texts = pretool.tokenize_all_texts(myEmbed.embed_lookup, texts)
     # print(tokenized_texts[0])
-
 
     ## Padding sequences
     seq_length = 200
-    features = pad_features(tokenized_texts, seq_length=seq_length) #左侧填充0
-
-    # print(len(features))
-    # printten(features)
+    features = pretool.pad_features(tokenized_texts, seq_length)
 
     ## Split Train, Test, Validation Data
     ## Get Dataloaders
