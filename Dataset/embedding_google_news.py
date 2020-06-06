@@ -2,15 +2,25 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch
 from gensim.models import KeyedVectors
-
+from gensim.downloader import api
 
 class Embedding_GoogleNews(nn.Module):
 
-    def __init__(self, dropout=0):
+    ###parameters：
+    ###dropout dropout层的概率
+    ###download_model_name 下载模型的名称   example:glove-twitter-25
+    ###model_path  已经下载好的语料模型的路径
+    def __init__(self, dropout=0,download_model_name=None,model_path = 'word2vec_model/GoogleNews-vectors-negative300-SLIM.bin'):
 
         super(Embedding_GoogleNews, self).__init__()
-        self.embed_lookup = KeyedVectors.load_word2vec_format(
-            'word2vec_model/GoogleNews-vectors-negative300-SLIM.bin', binary=True)
+        #如果需要下载模型
+        if(download_model_name != None):
+            self.embed_lookup = api.load(download_model_name)
+        else:
+            if model_path.endswith("bin"):
+                self.embed_lookup = KeyedVectors.load_word2vec_format(model_path, binary=True)
+            else:
+                self.embed_lookup = KeyedVectors.load_word2vec_format(model_path, binary=False)
         pretrained_words = []
         for word in self.embed_lookup.vocab:
             pretrained_words.append(word)

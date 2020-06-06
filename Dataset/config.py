@@ -1,4 +1,5 @@
 
+#模型的配置信息
 
 class Config(object):
     train_path = "data/train.csv"
