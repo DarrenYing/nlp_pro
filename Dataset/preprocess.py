@@ -14,18 +14,6 @@ class PreprocessTools():
     def __init__(self):
         pass
 
-    def get_stopwords(self):
-        stop_words = set(stopwords.words('english'))
-        return stop_words
-
-    def deletebr(self, line):
-        new_line = re.sub(r'<br\s*.?>', r'', line)
-        return new_line
-
-    def printten(self, data):
-        for i in range(10):
-            print(data[i])
-
 
     def preprocess_labels(self, labels):
         if labels[0] == "positive" or labels[0] == "negtive":
@@ -45,7 +33,7 @@ class PreprocessTools():
             #每行是一个字典
             for key in line:
                 #如果是key是'txt'
-                if key in input_cols:
+                if str(key).lower() in input_cols:
                     #txt进行处理，把句子转化成单词的list
                     new_line = self.deletebr(str(line[key]))
                     words = ''.join([c for c in new_line if c not in punctuation])
@@ -71,9 +59,8 @@ class PreprocessTools():
 
         return tokenized_texts
 
-    # remove_zero 是否去除空字符串
-    # print_sentence_len 是否要打印查看每个句子的长度
-    def remove_outliers(self, sentences, labels, minlen=0):
+    # 去除outliers
+    def remove_outliers(self, sentences, labels, minlen=0, istest=False):
         sentence_lens = Counter([len(x) for x in sentences])
         # if print_sentence_len == True:
         #     print(sentence_lens)
@@ -84,9 +71,13 @@ class PreprocessTools():
             # self.sentences = [self.sentences[ii] for ii in non_zero_idx]
             # self.labels = np.array([self.sentences[ii] for ii in non_zero_idx])
             zero_idx = [ii for ii, sent in enumerate(sentences) if len(sent) == 0]
-            for i in zero_idx:
-                sentences.pop(i)
-                labels.pop(i)
+            if istest:
+                for i in zero_idx:
+                    sentences.pop(i)
+            else:
+                for i in zero_idx:
+                    sentences.pop(i)
+                    labels.pop(i)
 
         return sentences, labels
 
@@ -100,3 +91,16 @@ class PreprocessTools():
             features[i, -len(row):] = np.array(row)[:seq_length]
 
         return features
+
+
+    def get_stopwords(self):
+        stop_words = set(stopwords.words('english'))
+        return stop_words
+
+    def deletebr(self, line):
+        new_line = re.sub(r'<br\s*.?>', r'', line)
+        return new_line
+
+    def printten(self, data):
+        for i in range(10):
+            print(data[i])
