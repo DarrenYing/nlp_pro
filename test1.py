@@ -35,7 +35,7 @@ if __name__ == '__main__':
     # ingore_cols = ['ID']
     # input_cols = ['txt']
 
-    myEmbed = Embedding_GoogleNews()
+    myEmbed = Embedding_GoogleNews(download_model_name="glove-wiki-gigaword-50")
     seq_length = opt.seq_length
 
     # Preprocess

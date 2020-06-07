@@ -2,7 +2,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch
 from gensim.models import KeyedVectors
-from gensim.downloader import api
+import gensim.downloader as api
 
 class Embedding_GoogleNews(nn.Module):
 
@@ -10,6 +10,7 @@ class Embedding_GoogleNews(nn.Module):
     ###dropout dropout层的概率
     ###download_model_name 下载模型的名称   example:glove-twitter-25
     ###model_path  已经下载好的语料模型的路径
+    ###可以选择的预训练模型https://www.ctolib.com/rare-technologies-gensim-data.html
     def __init__(self, dropout=0,download_model_name=None,model_path = 'word2vec_model/GoogleNews-vectors-negative300-SLIM.bin'):
 
         super(Embedding_GoogleNews, self).__init__()
