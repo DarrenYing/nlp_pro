@@ -11,6 +11,8 @@ class TextRNN(nn.Module):
                  bidirectional=True, dropout=0.5, output_dim=1):
         super(TextRNN, self).__init__()
 
+        self.netname = "TextRNN"
+
         # 1. embedding layer
         self.embed = embed
 

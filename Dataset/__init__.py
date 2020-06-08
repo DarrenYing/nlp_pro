@@ -4,11 +4,12 @@ __all__ = [
     "CSVLoader",
     "Utils",
     "Config",
-
+    "Embed_Loader",
 ]
 
-from .embedding_google_news import Embedding_GoogleNews
+from .embedding import *
 from .preprocess import PreprocessTools
 from .csv_loader import CSVLoader
 from .utils import Utils
 from .config import Config
+from Dataset.embedding.embed_loader import Embed_Loader

@@ -9,8 +9,8 @@ import torch
 import torch.nn as nn
 
 from Models import SentimentCNN, TextRNN, AttentionTextRNN
-from Trainer import Trainer, DataSplitter
-from Dataset import Embedding_GoogleNews, Config, CSVLoader, Utils
+from Trainer import Trainer, DataSplitter, Controller
+from Dataset import Config, CSVLoader, Utils, Embedding_GoogleNews, Embed_Loader
 
 
 def printten(data):
@@ -31,11 +31,10 @@ if __name__ == '__main__':
     csv_test.set_input_cols('txt')
     csv_test.data_init()
     test_sentences = csv_test.sentences
-    ## Preprocess input
-    # ingore_cols = ['ID']
-    # input_cols = ['txt']
 
-    myEmbed = Embedding_GoogleNews(download_model_name="glove-wiki-gigaword-50")
+    # myEmbed = Embedding_GoogleNews()
+    # opt.embed_path = 'word2vec_model/glove_vec/glove.6B.300d.txt'
+    myEmbed = Embed_Loader(embed_path=opt.embed_path)
     seq_length = opt.seq_length
 
     # Preprocess
@@ -87,4 +86,7 @@ if __name__ == '__main__':
     trainer = Trainer(net, train_loader, valid_loader, epochs=opt.epochs,
                       optimizer=optimizer, criterion=criterion, print_every=opt.print_every)
     trainer.train()
+
+    model_controller = Controller() #模型加载和保存
+    model_controller.store_param(trainer.model, "./checkpoints/models/{}_{}.pkl".format(net.netname, opt.epochs))
 

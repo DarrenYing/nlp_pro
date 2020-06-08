@@ -16,6 +16,8 @@ class SentimentCNN(nn.Module):
         """
         super(SentimentCNN, self).__init__()
 
+        self.netname = "SentimentCNN"
+
         # set class vars
         self.num_filters = num_filters
 
