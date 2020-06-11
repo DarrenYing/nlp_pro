@@ -9,8 +9,8 @@ import torch
 import torch.nn as nn
 
 from Models import SentimentCNN, TextRNN, AttentionTextRNN
-from Trainer import Trainer, DataSplitter, Controller
-from Dataset import Config, CSVLoader, Utils, Embedding_GoogleNews, Embed_Loader
+from TrainTest import Trainer, DataSplitter, Tester
+from Dataset import opt, CSVLoader, Utils, Embedding_GoogleNews, Embed_Loader
 
 
 def printten(data):
@@ -19,7 +19,6 @@ def printten(data):
 
 
 if __name__ == '__main__':
-    opt = Config()
     ## Read csv data
     csv_train = CSVLoader(opt.train_path)
     csv_train.set_target_cols('label')
@@ -63,6 +62,7 @@ if __name__ == '__main__':
     data_splitter = DataSplitter(features, labels, split_frac=opt.split_frac,
                                  batch_size=opt.batch_size)
     train_loader, valid_loader = data_splitter.train_loader, data_splitter.valid_loader
+    test_loader = data_splitter.get_onlytest(test_features, opt.batch_size)
 
     ## First checking if GPU is available
     train_on_gpu = utils.check_gpu()
@@ -83,10 +83,15 @@ if __name__ == '__main__':
     criterion = nn.BCELoss()
     optimizer = torch.optim.Adam(net.parameters(), lr=opt.lr)
 
+    opt.save_path = "./checkpoints/models/{}_{}.pkl".format(net.netname, opt.epochs)
+
     trainer = Trainer(net, train_loader, valid_loader, epochs=opt.epochs,
-                      optimizer=optimizer, criterion=criterion, print_every=opt.print_every)
+                      optimizer=optimizer, criterion=criterion, print_every=opt.print_every,
+                      save_path=opt.save_path)
     trainer.train()
 
-    model_controller = Controller() #模型加载和保存
-    model_controller.store_param(trainer.model, "./checkpoints/models/{}_{}.pkl".format(net.netname, opt.epochs))
+
+    tester = Tester(net.eval(), opt.save_path, test_loader)
+    pred_result, acc = tester.predict()
+
 

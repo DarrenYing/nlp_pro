@@ -3,11 +3,12 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from torch.utils.data import DataLoader
+from TrainTest.Model_controller import Controller
 
 class Trainer(object):
 
     def __init__(self, model, train_loader, valid_loader, epochs=2, optimizer=None, criterion=None,
-                 print_every=100, update_every=1, save_path=None, train_on_gpu=False):
+                 print_every=100, save_every=1, save_path=None, train_on_gpu=False):
 
         super(Trainer, self).__init__()
 
@@ -31,15 +32,18 @@ class Trainer(object):
             self.criterion = nn.CrossEntropyLoss()
         self.criterion =criterion
         self.print_every = print_every
-        self.update_every = update_every
+        self.save_every = save_every
         if save_path == None:
             pass
             # self.save_path = ''
         self.save_path = save_path
         self.train_on_gpu = train_on_gpu
 
+        self.controller = Controller()
+
 
     def train(self):
+
         if self.train_on_gpu:
             self.model.cuda()
 
@@ -88,6 +92,12 @@ class Trainer(object):
                           "Step: {}...".format(counter),
                           "Loss: {:.6f}...".format(loss.item()),
                           "Val Loss: {:.6f}".format(np.mean(val_losses)))
+
+            if epoch % self.save_every == 0:
+                self.controller.store_param(self.model, self.save_path)
+
+
+
 
 
 

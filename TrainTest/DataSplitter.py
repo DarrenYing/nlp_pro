@@ -61,3 +61,8 @@ class DataSplitter(object):
         # shuffling and batching data
         self.train_loader = DataLoader(train_data, shuffle=True, batch_size=batch_size)
         self.valid_loader = DataLoader(valid_data, shuffle=True, batch_size=batch_size)
+
+    def get_onlytest(self, test_features, batch_size):
+        test_data = TensorDataset(torch.from_numpy(test_features))
+        test_loader = DataLoader(test_data, shuffle=True, batch_size=batch_size)
+        return test_loader
