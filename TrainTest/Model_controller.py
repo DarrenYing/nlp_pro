@@ -15,7 +15,7 @@ class Controller:
             model = torch.load(model_path)
             return model
         except Exception as e:
-            print("The model file doesn't exist!")
+            print(e)
             exit(1)
 
     def store_model(self, model, model_path):
@@ -28,10 +28,11 @@ class Controller:
     def load_param(self, model, param_path):
         print("load the model")
         try:
-            model.load_state_dict(torch.load(param_path))
+            map_location = lambda storage, loc: storage
+            model.load_state_dict(torch.load(param_path, map_location=map_location))
             return model
         except Exception as e:
-            print("The model file doesn't exist!")
+            print(e)
             exit(1)
 
     def store_param(self, model, param_path):

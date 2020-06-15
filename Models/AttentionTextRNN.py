@@ -54,11 +54,12 @@ class AttentionTextRNN(nn.Module):
         # output    [batch, seq_len, hidden_size*num_direction]
         # hidden    [batch, num_layers*num_direction, hidden_size]
 
-        out = self.atte(output, output, output)
+        output = self.atte(output, output, output)
         # out   [batch, seq_len_q, model_size] model_size=hidden_size*num_direction
 
-        output = output + self.dropout(out)
-        feat = torch.sum(output, dim=1) # feat  [batch_size, hidden_size * num_direction]
+        output = output + self.dropout(output)
+        feat = torch.sum(output, dim=1)
+        # feat  [batch_size, model_size]
 
         # """ tanh attention 的实现 """
         # score = torch.tanh(torch.matmul(output, self.W_w))

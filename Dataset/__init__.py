@@ -5,7 +5,7 @@ __all__ = [
     "Utils",
     "Config",
     "Embed_Loader",
-    "opt",
+    "configs",
 
 ]
 
@@ -13,5 +13,5 @@ from .embedding import *
 from .preprocess import PreprocessTools
 from .csv_loader import CSVLoader
 from .utils import Utils
-from .config import Config, opt
+from .config import Config, configs
 from Dataset.embedding.embed_loader import Embed_Loader

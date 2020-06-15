@@ -8,7 +8,7 @@ from TrainTest.Model_controller import Controller
 class Trainer(object):
 
     def __init__(self, model, train_loader, valid_loader, epochs=2, optimizer=None, criterion=None,
-                 print_every=100, save_every=1, save_path=None, train_on_gpu=False):
+                 print_every=100, save_every=10, prefix=None):
 
         super(Trainer, self).__init__()
 
@@ -33,19 +33,17 @@ class Trainer(object):
         self.criterion =criterion
         self.print_every = print_every
         self.save_every = save_every
-        if save_path == None:
-            pass
+        if prefix == None:
+            prefix = 'checkpoints/models/'
             # self.save_path = ''
-        self.save_path = save_path
-        self.train_on_gpu = train_on_gpu
+        self.prefix = prefix
 
         self.controller = Controller()
 
 
     def train(self):
-
-        if self.train_on_gpu:
-            self.model.cuda()
+        device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+        self.model.to(device)
 
         counter = 0
 
@@ -58,8 +56,8 @@ class Trainer(object):
             for inputs, labels in self.train_loader:
                 counter += 1
 
-                if (self.train_on_gpu):
-                    inputs, labels = inputs.cuda(), labels.cuda()
+                inputs = inputs.to(device)
+                labels = labels.to(device)
 
                 # zero accumulated gradients
                 self.model.zero_grad()
@@ -77,24 +75,30 @@ class Trainer(object):
                     # Get validation loss
                     val_losses = []
                     self.model.eval()
+                    correct = 0
                     for inputs, labels in self.valid_loader:
-
-                        if (self.train_on_gpu):
-                            inputs, labels = inputs.cuda(), labels.cuda()
+                        inputs = inputs.to(device)
+                        labels = labels.to(device)
 
                         output = self.model(inputs.long())
                         val_loss = self.criterion(output.squeeze(), labels.float())
-
                         val_losses.append(val_loss.item())
 
+                        pre = torch.round(output.squeeze())
+                        labels = labels.to(torch.float)
+                        correct += (pre == labels).sum().item()
+
                     self.model.train()
+                    acc = correct / len(self.valid_loader.dataset)
+                    print('Accuracy: {}'.format(acc))
                     print("Epoch: {}/{}...".format(epoch + 1, self.epochs),
                           "Step: {}...".format(counter),
                           "Loss: {:.6f}...".format(loss.item()),
                           "Val Loss: {:.6f}".format(np.mean(val_losses)))
 
-            if epoch % self.save_every == 0:
-                self.controller.store_param(self.model, self.save_path)
+            if (epoch+1) % self.save_every == 0:
+                save_path = '{}{}_{}.pkl'.format(self.prefix, self.model.netname, epoch+1)
+                self.controller.store_param(self.model, save_path)
 
 
 

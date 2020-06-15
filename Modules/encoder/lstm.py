@@ -43,5 +43,4 @@ class LSTM(nn.Module):
 
     def forward(self, x):
         output, (hidden, _) = self.lstm(x)
-
         return output, hidden

@@ -8,7 +8,7 @@ import numpy as np
 import torch
 import torch.nn as nn
 
-from Models import SentimentCNN, TextRNN, AttentionTextRNN
+from Models import *
 from TrainTest import Trainer, DataSplitter, Tester
 from Dataset import opt, CSVLoader, Utils, Embedding_GoogleNews, Embed_Loader
 
@@ -31,12 +31,12 @@ if __name__ == '__main__':
     csv_test.data_init()
     test_sentences = csv_test.sentences
 
-    # myEmbed = Embedding_GoogleNews()
+    myEmbed = Embedding_GoogleNews()
     # opt.embed_path = 'word2vec_model/glove_vec/glove.6B.300d.txt'
-    myEmbed = Embed_Loader(embed_path=opt.embed_path)
+    # myEmbed = Embed_Loader(embed_path=opt.embed_path)
     seq_length = opt.seq_length
 
-    # Preprocess
+    ## Preprocess
     utils = Utils()
     features, labels = utils.preprocess(
         sentences=sentences,
@@ -63,9 +63,7 @@ if __name__ == '__main__':
                                  batch_size=opt.batch_size)
     train_loader, valid_loader = data_splitter.train_loader, data_splitter.valid_loader
     test_loader = data_splitter.get_onlytest(test_features, opt.batch_size)
-
     ## First checking if GPU is available
-    train_on_gpu = utils.check_gpu()
 
     ## Models
     output_size = 1  # binary class (1 or 0)
@@ -73,8 +71,9 @@ if __name__ == '__main__':
     kernel_sizes = [3, 4, 5]
 
     # net = SentimentCNN(myEmbed, output_size, num_filters, kernel_sizes)
-    # net = TextRNN(myEmbed, hidden_size=100, output_dim=output_size)
-    net = AttentionTextRNN(myEmbed, hidden_size=100, output_dim=output_size)
+    # net = TextRNN(myEmbed, hidden_size=100, num_layers=2, output_dim=output_size)
+    # net = AttentionTextRNN(myEmbed, hidden_size=100, output_dim=output_size)
+    net = BiLSTM_atte(myEmbed, hidden_size=100, output_dim=output_size)
 
     print(net)
 
@@ -83,15 +82,24 @@ if __name__ == '__main__':
     criterion = nn.BCELoss()
     optimizer = torch.optim.Adam(net.parameters(), lr=opt.lr)
 
-    opt.save_path = "./checkpoints/models/{}_{}.pkl".format(net.netname, opt.epochs)
+    opt.save_path = "./checkpoints/models/"
 
-    trainer = Trainer(net, train_loader, valid_loader, epochs=opt.epochs,
-                      optimizer=optimizer, criterion=criterion, print_every=opt.print_every,
-                      save_path=opt.save_path)
-    trainer.train()
+    # trainer = Trainer(net, train_loader, valid_loader, epochs=opt.epochs,
+    #                   optimizer=optimizer, criterion=criterion, print_every=opt.print_every,
+    #                   prefix=opt.save_path)
+    # trainer.train()
+
+    save_path = 'checkpoints/models/BiLSTM_atte_0.pkl'
+    tester = Tester(net.eval(), save_path, test_loader)
+    # result, acc = tester.predict_valid(valid_loader)
+    result = tester.predict()
+    header = ['ID', 'Label']
+    tester.save_to_csv(result, header)
 
 
-    tester = Tester(net.eval(), opt.save_path, test_loader)
-    pred_result, acc = tester.predict()
+    # x = [1,2,3]
+    # print(type(x))
+    # x = np.array(x)
+    # print(x)
 
 
