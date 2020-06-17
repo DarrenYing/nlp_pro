@@ -61,9 +61,9 @@ if __name__ == '__main__':
     ## Get Dataloaders
     data_splitter = DataSplitter(features, labels, split_frac=opt.split_frac,
                                  batch_size=opt.batch_size)
-    train_loader, valid_loader = data_splitter.train_loader, data_splitter.valid_loader
     test_loader = data_splitter.get_onlytest(test_features, opt.batch_size)
-    ## First checking if GPU is available
+
+
 
     ## Models
     output_size = 1  # binary class (1 or 0)
@@ -84,22 +84,18 @@ if __name__ == '__main__':
 
     opt.save_path = "./checkpoints/models/"
 
-    # trainer = Trainer(net, train_loader, valid_loader, epochs=opt.epochs,
-    #                   optimizer=optimizer, criterion=criterion, print_every=opt.print_every,
-    #                   prefix=opt.save_path)
-    # trainer.train()
+    trainer = Trainer(net, data_splitter, epochs=opt.epochs,
+                      optimizer=optimizer, criterion=criterion, print_every=opt.print_every,
+                      prefix=opt.save_path)
+    trainer.train()
 
-    save_path = 'checkpoints/models/BiLSTM_atte_0.pkl'
-    tester = Tester(net.eval(), save_path, test_loader)
-    # result, acc = tester.predict_valid(valid_loader)
-    result = tester.predict()
-    header = ['ID', 'Label']
-    tester.save_to_csv(result, header)
+    # save_path = 'checkpoints/models/BiLSTM_atte_0.pkl'
+    # tester = Tester(net.eval(), save_path, test_loader)
+    # # result, acc = tester.predict_valid(valid_loader)
+    # result = tester.predict()
+    # header = ['ID', 'Label']
+    # tester.save_to_csv(result, header)
 
 
-    # x = [1,2,3]
-    # print(type(x))
-    # x = np.array(x)
-    # print(x)
 
 

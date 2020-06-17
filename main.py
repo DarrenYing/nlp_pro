@@ -12,65 +12,18 @@ import torch.nn as nn
 from Models import *
 from TrainTest import Trainer, DataSplitter, Tester
 from Dataset import configs, CSVLoader, Utils, Embedding_GoogleNews, Embed_Loader
-
+from Dataset.config import loss_func_dict
+import fire
 
 def printten(data):
     for i in range(10):
         print(data[i])
 
-
-def helplist():
-    print("""default and reference:
-    -h : help_list
-    -m : model_name = {}
-    -o : model_prefix_dir = {}
-    --tr_dpath : train_data_path = {}
-    --te_dpath : test_data_path = {}
-    --epoch : epochs = {}
-    --embedpath : embed_path = {}
-    --lr : learn_rate = {}
-    --ldpath : load_path = {}
-    
-    --mode :
-    t : train_only
-    p : predict_only
-    a : train and predict
-            
-    """.format(configs.model_type, configs.model_prefix, configs.train_path, configs.test_path, configs.epochs,
-               configs.embed_path, configs.lr,configs.load_path)
-
-          )
-
-
-def main(argv):
-    try:
-        opts, args = getopt.getopt(argv, "-h-m:-o:", ["epoch=", "mode=", "--embedpath=", "--batchsize=", "--lr=","--ldpath="])
-    except getopt.GetoptError:
-        helplist()
-        sys.exit(2)
-
-    for opt, arg in opts:
-        if opt == "-h":
-            helplist()
-            sys.exit(0)
-        if opt == "--epoch":
-            configs.epochs = int(arg)
-        if opt == "--embedpath":
-            configs.embed_path = arg
-        if opt == "--batchsize":
-            configs.batch_size = int(arg)
-        if opt == "-m":
-            configs.model_type = arg
-        if opt == "--lr":
-            configs.lr = float(arg)
-        if opt == "--mode":
-            configs.mode = arg
-        if opt == "--ldpath":
-            configs.load_path = arg
-    print(opts, args)
-    exit(0)
-
+def main(**kwargs):
     ## Read csv data
+
+    configs._parse(kwargs)
+
     csv_train = CSVLoader(configs.train_path)
     csv_train.set_target_cols('label')
     csv_train.set_input_cols('txt')
@@ -82,9 +35,9 @@ def main(argv):
     csv_test.data_init()
     test_sentences = csv_test.sentences
 
-    # myEmbed = Embedding_GoogleNews()
+    myEmbed = Embedding_GoogleNews()
     # opt.embed_path = 'word2vec_model/glove_vec/glove.6B.300d.txt'
-    myEmbed = Embed_Loader(embed_path=configs.embed_path)
+    # myEmbed = Embed_Loader(embed_path=configs.embed_path)
     seq_length = configs.seq_length
 
     # Preprocess
@@ -111,7 +64,7 @@ def main(argv):
     ## Get Dataloaders
     data_splitter = DataSplitter(features, labels, split_frac=configs.split_frac,
                                  batch_size=configs.batch_size)
-    train_loader, valid_loader = data_splitter.train_loader, data_splitter.valid_loader
+
     test_loader = data_splitter.get_onlytest(test_features, configs.batch_size)
 
     ## First checking if GPU is available
@@ -136,12 +89,27 @@ def main(argv):
 
     ## Start Train
     # loss and optimization functions
-    criterion = nn.BCELoss()
-    optimizer = torch.optim.Adam(net.parameters(), lr=configs.lr)
+    if not loss_func_dict[configs.loss_func.lower()]:
+        raise Exception("Wrong Loss func arg! Plz check again")
+    else:
+        criterion = loss_func_dict[configs.loss_func]()
+
+    if configs.optimizer.lower()=="sgd":
+        optimizer = torch.optim.SGD(net.parameters(), lr=configs.lr)
+    elif configs.optimizer.lower() == "mot":
+        optimizer = torch.optim.SGD(net.parameters(), lr=configs.lr, momentum=0.8, nesterov=True)
+    elif configs.optimizer.lower() == "rms":
+        optimizer = torch.optim.RMSprop(net.parameters(), lr=configs.lr, alpha=0.9)
+    elif configs.optimizer.lower() == "adam":
+        optimizer = torch.optim.Adam(net.parameters(), lr=configs.lr, betas=(0.9, 0.99))
+    elif configs.optimizer.lower() == "adg":
+        optimizer = torch.optim.Adagrad(net.parameters(), lr=configs.lr)
+    else:
+        raise Exception("Wrong optimizer arg! Plz check again")
 
     configs.save_path = "./checkpoints/models/"
 
-    trainer = Trainer(net, train_loader, valid_loader, epochs=configs.epochs,
+    trainer = Trainer(net, data_splitter, epochs=configs.epochs,
                       optimizer=optimizer, criterion=criterion, print_every=configs.print_every,
                       prefix=configs.save_path)
     if configs.mode == "t" or configs.mode == "a":
@@ -149,11 +117,13 @@ def main(argv):
     if configs.mode == "p" or configs.mode == "a":
         tester = Tester(net.eval(), configs.load_path, test_loader)
         pred_result = tester.predict()
-        header = ['ID', 'Label']
-        tester.save_to_csv(pred_result, header)
+        print(pred_result)
     else:
         raise Exception("Wrong mode arg,Plz check")
 
 
+
+
 if __name__ == '__main__':
-    main(sys.argv[1:])
+    fire.Fire(main)
+    # main(sys.argv[1:])
