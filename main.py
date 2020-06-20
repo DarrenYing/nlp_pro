@@ -25,8 +25,8 @@ def main(**kwargs):
     configs._parse(kwargs)
 
     csv_train = CSVLoader(configs.train_path)
-    csv_train.set_target_cols('label')
-    csv_train.set_input_cols('txt')
+    csv_train.set_target_cols(configs.label_col)
+    csv_train.set_input_cols(configs.input_col)
     csv_train.data_init()
     sentences, labels = csv_train.sentences, csv_train.labels
 
@@ -75,13 +75,13 @@ def main(**kwargs):
     kernel_sizes = [3, 4, 5]
 
     if configs.model_type.lower() == "sc":
-        net = SentimentCNN(myEmbed, output_size, num_filters, kernel_sizes)
+        net = SentimentCNN(myEmbed, output_size, num_filters, kernel_sizes,dropout=configs.dropout)
     elif configs.model_type.lower() == "tr":
-        net = TextRNN(myEmbed, hidden_size=100, num_layers=2, output_dim=output_size)
+        net = TextRNN(myEmbed, hidden_size=100, num_layers=1, output_dim=output_size,dropout=configs.dropout)
     elif configs.model_type.lower() == "atr":
-        net = AttentionTextRNN(myEmbed, hidden_size=100, output_dim=output_size)
+        net = AttentionTextRNN(myEmbed, hidden_size=100, output_dim=output_size,dropout=configs.dropout)
     elif configs.model_type.lower() == "blstma":
-        net = BiLSTM_atte(myEmbed, hidden_size=100, output_dim=output_size)
+        net = BiLSTM_atte(myEmbed, hidden_size=200, num_layers=1, output_dim=output_size,dropout=configs.dropout)
     else:
         raise Exception("Wrong model arg,Plz check")
 
@@ -118,7 +118,7 @@ def main(**kwargs):
         tester = Tester(net.eval(), configs.load_path, test_loader)
         pred_result = tester.predict()
         print(pred_result)
-    else:
+    if configs.mode != "p" and configs.mode != "t" and configs.mode != "a":
         raise Exception("Wrong mode arg,Plz check")
 
 

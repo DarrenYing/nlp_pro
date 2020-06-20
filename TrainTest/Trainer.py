@@ -8,7 +8,7 @@ from TrainTest.Model_controller import Controller
 class Trainer(object):
 
     def __init__(self, model, datasplitter, epochs=2, optimizer=None, criterion=None,
-                 print_every=100, save_every=10, prefix=None):
+                 print_every=100, save_every=1, prefix=None):
 
         super(Trainer, self).__init__()
 
@@ -69,7 +69,6 @@ class Trainer(object):
                 if counter % self.print_every == 0:
                     # Get validation loss
                     self.evaluation(onlyacc, epoch, counter, loss)
-
             if (epoch+1) % self.save_every == 0:
                 save_path = '{}{}_{}.pkl'.format(self.prefix, self.model.netname, epoch+1)
                 self.controller.store_param(self.model, save_path)

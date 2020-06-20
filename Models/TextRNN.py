@@ -16,6 +16,8 @@ class TextRNN(nn.Module):
         # 1. embedding layer
         self.embed = embed
 
+        self.bidirectional = bidirectional
+
         # 2. lstm
         self.lstm = encoder.LSTM(
             input_size = self.embed.embedding_dim,
@@ -30,17 +32,18 @@ class TextRNN(nn.Module):
         self.fc = nn.Linear(hidden_size*self.num_direction, output_dim)
         self.dropout = nn.Dropout(dropout)
 
-        self.softmax = nn.Softmax(output_dim)
+        self.sig = nn.Sigmoid()
 
     def forward(self, x):
 
         embeds = self.embed(x) # (batch, seq_len, embedding_dim)
         output, hx = self.lstm(embeds)  #output [batch, seq_len, hidden_size*num_direction]
                                         #hx     [num_layers*num_direction, batch, hidden_size]
-        hx = self.dropout(
-            torch.cat((hx[-2, :, :], hx[-1, :, :]), dim=1))  # 连接最后一层的双向输出
+        if(self.bidirectional):
+            hx = self.dropout(
+                torch.cat((hx[-2, :, :], hx[-1, :, :]), dim=1))  # 连接最后一层的双向输出
 
         logit = self.fc(hx)
 
-        return self.softmax(logit)
+        return self.sig(logit)
 

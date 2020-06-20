@@ -71,7 +71,7 @@ if __name__ == '__main__':
     kernel_sizes = [3, 4, 5]
 
     # net = SentimentCNN(myEmbed, output_size, num_filters, kernel_sizes)
-    # net = TextRNN(myEmbed, hidden_size=100, num_layers=2, output_dim=output_size)
+    # net = TextRNN(myEmbed, hidden_size=100, num_layers=1, output_dim=output_size)
     # net = AttentionTextRNN(myEmbed, hidden_size=100, output_dim=output_size)
     net = BiLSTM_atte(myEmbed, hidden_size=100, output_dim=output_size)
 

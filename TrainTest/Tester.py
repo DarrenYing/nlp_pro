@@ -18,7 +18,7 @@ class Tester(object):
         self.model.to(device)
 
         pre_res = []
-        with torch.no_grad():  # when in test stage, no grad
+        with torch.no_grad():  # 测试时，不需要更新梯度
             for inputs in self.test_loader:
                 inputs = inputs[0]
                 inputs = inputs.to(device)
