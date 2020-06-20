@@ -83,10 +83,11 @@ class DataSplitter(object):
         X_train, y_train = None, None
         X_valid, y_valid = None, None
 
-        idx = slice(j * fold_size, (j + 1) * fold_size)
+        
 
         for j in range(k): # slice(start,end,step)切片函数
             ##idx 为每组 valid
+            idx = slice(j * fold_size, (j + 1) * fold_size)
             X_part, y_part = self.features[idx], self.labels[idx] #ndarray
             X_part = torch.from_numpy(X_part)
             y_part = torch.from_numpy(y_part)
